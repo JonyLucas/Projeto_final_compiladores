@@ -1,12 +1,12 @@
 package control;
 
-import java.io.Reader;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 
 import model.Token;
@@ -16,13 +16,13 @@ import model.Token;
  * @author Joao
  */
 public class LeitorDeTexto {
-    static private BufferedReader buffer_reader;
+    static private Scanner scan;
     static private LeitorDeTexto reader = null;
-    static private Reader file_reader;
+    static private File file;
     
     private LeitorDeTexto(String path) throws FileNotFoundException{
-        file_reader = new FileReader(path);
-        buffer_reader = new BufferedReader(file_reader);
+        file = new File(path);
+        scan = new Scanner(file);
     }
     
     /**Segue o padrão singleton, retorna uma instancia unica**/
@@ -34,7 +34,17 @@ public class LeitorDeTexto {
     }
     
     public ArrayList<Token> read_file(){
-        return null;
+        String word;
+        ArrayList<Token> tokens = new ArrayList<Token>();
+        
+        while(scan.hasNext()){
+            word = scan.next();
+            tokens.add(new Token(word));
+        }
+        
+        scan.close();
+        
+        return tokens;
     }
     
         
