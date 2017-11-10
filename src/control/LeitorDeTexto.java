@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+
+import model.Token;
 
 /**
  *
@@ -22,12 +25,16 @@ public class LeitorDeTexto {
         buffer_reader = new BufferedReader(file_reader);
     }
     
-    /**Segue o padrão singleton**/
+    /**Segue o padrão singleton, retorna uma instancia unica**/
     public static synchronized LeitorDeTexto initialize(String file_path) throws FileNotFoundException{
         if(reader == null){
             reader = new LeitorDeTexto(file_path);
         }
         return reader;
+    }
+    
+    public ArrayList<Token> read_file(){
+        return null;
     }
     
         
