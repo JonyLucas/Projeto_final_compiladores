@@ -4,34 +4,35 @@ package control;
  *
  * @author Joao
  */
-
 import java.io.IOException;
+import model.Token;
 import org.jsoup.Jsoup;
 import org.jsoup.examples.HtmlToPlainText;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
 public class HtmlDom {
+
     private static String url;
-    
-    public static void setUrl(String url){
+
+    public static void setUrl(String url) {
         HtmlDom.url = url;
     }
-    
-    public static String getName() throws IOException{
-        Document doc = Jsoup.connect(url).get();
-        Elements divs = doc.select("[divs]");
-        Element span = doc.select("span").first();
-        Elements class_name = doc.select("h3");
-        
-        HtmlToPlainText formatter = new HtmlToPlainText();
-        
-        String text = doc.body().text();
-        
-        System.out.println(text);
-        
+
+    public static String get_gramatical_class(Token token) throws IOException {
+
+        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token.get_word() + "/").get();
+        Element loginform = doc.getElementById("content");
+        Elements inputElements = loginform.getElementsByTag("span");
+
+        for (Element inputElement : inputElements) {
+            String key = inputElement.attr("class");
+            if ("cl".equals(key)) {
+                System.out.println(inputElement.html());
+            }
+        }
+
         return null;
-        
     }
-    
+
 }
