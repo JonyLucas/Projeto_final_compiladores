@@ -5,6 +5,7 @@
  */
 package control;
 
+import model.Token;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,16 +37,12 @@ public class HtmlDomTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of getName method, of class HtmlDom.
-     */
+    
     @Test
-    public void testGetName() throws Exception {
-        System.out.println("getName");
-        String url = "https://www.dicio.com.br/corrida/";
-        HtmlDom.setUrl(url);
-        HtmlDom.getName();
+    public void testGet_gramatical_class() throws Exception{
+        System.out.println("get gramatical class");
+        Token token = new Token("gerar");
+        HtmlDom.get_gramatical_class(token);
     }
     
 }
