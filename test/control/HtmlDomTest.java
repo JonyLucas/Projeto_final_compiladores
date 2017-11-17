@@ -42,11 +42,12 @@ public class HtmlDomTest {
     @Test
     public void testGet_gramatical_class() throws Exception{
         System.out.println("get gramatical class");
-        Token token = new Token("inteligente");
+        Token token = new Token("gerou");
         String[] gramatical_class = HtmlDom.get_gramatical_class(token);
         
         for(String s : gramatical_class){
-            System.out.println(s);
+            if(s != null)
+                System.out.println(s);
         }
     }
     

@@ -7,7 +7,6 @@ package control.dom;
 import java.io.IOException;
 import model.Token;
 import org.jsoup.Jsoup;
-import org.jsoup.examples.HtmlToPlainText;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
@@ -28,12 +27,16 @@ public class HtmlDom {
         int size = result.size();
         int i = 0;
         
+        if(size == 0){
+            System.out.println("VAZIO");
+        }
+        
         String[] gramatical_classes = new String[size];
         
         for (Element element : result) {
             String key = element.attr("class");
             if ("cl".equals(key)) {
-                //System.out.println(inputElement.text());
+                //System.out.println(element.text());
                 gramatical_classes[i] = element.text();
                 i++;
             }
