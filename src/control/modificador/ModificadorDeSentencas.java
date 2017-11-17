@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package control.analisadores;
-
-import control.dom.HtmlDom;
+package control.modificador;
 
 /**
  *
  * @author Joao
  */
-public class AnalisadorGramatical {
-    
-    public static void analisar(){
-        
-    }
+public class ModificadorDeSentencas {
     
 }

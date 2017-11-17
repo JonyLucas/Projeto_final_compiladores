@@ -42,8 +42,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_gramatical_class() throws Exception{
         System.out.println("get gramatical class");
-        Token token = new Token("gerou");
-        String[] gramatical_class = HtmlDom.get_gramatical_class(token);
+        String[] gramatical_class = HtmlDom.get_gramatical_class("gerou");
         
         for(String s : gramatical_class){
             if(s != null)
@@ -54,8 +53,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_synonyms() throws Exception{
         System.out.println("get synonyms");
-        Token token = new Token("inteligente");
-        String[] synonyms = HtmlDom.get_synonyms(token);
+        String[] synonyms = HtmlDom.get_synonyms("inteligente");
         
         for(String s : synonyms){
             System.out.println(s);

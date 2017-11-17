@@ -12,15 +12,9 @@ import org.jsoup.select.*;
 
 public class HtmlDom {
 
-    private static String url;
-
-    public static void setUrl(String url) {
-        HtmlDom.url = url;
-    }
-
-    public static String[] get_gramatical_class(Token token) throws IOException {
+    public static String[] get_gramatical_class(String token) throws IOException {
         
-        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token.get_word() + "/").get();
+        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
         Element content = doc.getElementById("content");
         Elements result = content.getElementsByTag("span");
         
@@ -45,8 +39,8 @@ public class HtmlDom {
         return gramatical_classes;
     }
     
-    public static String[] get_synonyms(Token token) throws IOException{
-        Document doc = Jsoup.connect("http://www.sinonimos.com.br/" + token.get_word() + "/").get();
+    public static String[] get_synonyms(String token) throws IOException{
+        Document doc = Jsoup.connect("http://www.sinonimos.com.br/" + token + "/").get();
         Elements result = doc.getElementsByClass("sinonimo");
         
         int size = result.size();

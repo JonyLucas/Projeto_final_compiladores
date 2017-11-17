@@ -15,23 +15,18 @@ import java.util.ArrayList;
 public class Token {
     
     private String word;
-    private String gramatical_class;
+    private ArrayList<String> gramatical_class = new ArrayList<String>();
     private int position;
     private ArrayList<String> synonyms = new ArrayList<String>();
     
     /**-- Construtores --**/
     
     public Token(String word){
-        this(word, null, -1);
+        this(word, -1);
     }
     
     public Token(String word, int position){
-        this(word, null, position);
-    }
-    
-    public Token(String word, String gramatical_class, int position){
         this.word = word;
-        this.gramatical_class = gramatical_class;
         this.position = position;
     }
     
@@ -41,7 +36,7 @@ public class Token {
         return this.word;
     }
     
-    public String get_gramatical_class(){
+    public ArrayList<String> get_gramatical_class(){
         return this.gramatical_class;
     }
     
@@ -59,11 +54,19 @@ public class Token {
         position = pos;
     }
     
-    public void set_gramatical_class(String gc){
-        gramatical_class = gc;
+    public void set_gramatical_class(String[] gc){
+        for(String s : gc){
+            gramatical_class.add(s);
+        }
     }
     
-    public void add_synonym(String synonymous){
-        synonyms.add(synonymous);
+    public void add_synonym(String[] synonymous){
+        for(String s : synonymous){
+            synonyms.add(s);
+        }
+    }
+    
+    public void describe(){
+        System.out.println("Word: " + word + "\tSynonyms: " + synonyms + "\tGramatical class: " + gramatical_class);
     }
 }

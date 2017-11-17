@@ -2,14 +2,9 @@ package control.leitores;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import model.Token;
 
 /**
  *
@@ -33,13 +28,13 @@ public class LeitorDeTexto {
         return reader;
     }
     
-    public ArrayList<Token> read_file(){
+    public ArrayList<String> read_file(){
         String word;
-        ArrayList<Token> tokens = new ArrayList<Token>();
+        ArrayList<String> tokens = new ArrayList<String>();
         
         while(scan.hasNext()){
             word = scan.next();
-            tokens.add(new Token(word));
+            tokens.add(word);
         }
         
         scan.close();

@@ -18,13 +18,12 @@ import model.Token;
  */
 public class Analisador {
     
-    private AnalisadorLexico al;
-    private AnalisadorGramatical ag;
-    private LeitorDeTexto lt;
+    private static AnalisadorLexico al;
+    private static LeitorDeTexto lt;
     
-    public void analisar(String file_path){
+    public static void analisar(String file_path){
         
-        ArrayList<Token> tokens_lidos = null;
+        ArrayList<String> tokens_lidos = null;
         
         /**Faz a leitura do arquivo e divide-o em tokens**/
         
@@ -40,7 +39,8 @@ public class Analisador {
         
         /**Realiza a classificação gramatical**/
         
-        
+        al = AnalisadorLexico.get_instance(tokens_lidos);
+        al.analisar();
         
     }
     

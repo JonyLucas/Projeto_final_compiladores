@@ -5,10 +5,28 @@
  */
 package infra;
 
+import java.util.ArrayList;
+import model.Token;
+
 /**
  *
  * @author Joao
  */
 public class Container {
+    private static ArrayList<Token> tokens = new ArrayList<Token>();
+    
+    public static Token get(int index){
+        return tokens.get(index);
+    }
+    
+    public static void add(Token token){
+        tokens.add(token);
+    }
+    
+    public static void list_all(){
+        for(Token token : tokens){
+            token.describe();
+        }
+    }
     
 }

@@ -62,8 +62,8 @@ public class LeitorDeTextoTest {
         System.out.println("read_file");
         LeitorDeTexto instance = null;
         ArrayList<Token> expResult = null;
-        ArrayList<Token> result = instance.read_file();
-        assertEquals(expResult, result);
+        //ArrayList<Token> result = instance.read_file();
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
