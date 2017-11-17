@@ -5,11 +5,11 @@ package view;
  * @author Joao
  */
 
+import control.leitores.LeitorDeTexto;
 import javax.swing.JOptionPane;
 
 import java.util.ArrayList; //Provisorio
 import model.Token;
-import control.*;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

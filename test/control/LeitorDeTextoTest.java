@@ -5,6 +5,7 @@
  */
 package control;
 
+import control.leitores.LeitorDeTexto;
 import java.util.ArrayList;
 import model.Token;
 import org.junit.After;

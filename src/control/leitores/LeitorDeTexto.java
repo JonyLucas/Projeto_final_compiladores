@@ -1,4 +1,4 @@
-package control;
+package control.leitores;
 
 import java.io.File;
 import java.io.FileNotFoundException;

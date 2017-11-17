@@ -5,6 +5,7 @@
  */
 package control;
 
+import control.dom.HtmlDom;
 import model.Token;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -41,8 +42,24 @@ public class HtmlDomTest {
     @Test
     public void testGet_gramatical_class() throws Exception{
         System.out.println("get gramatical class");
-        Token token = new Token("gerar");
-        HtmlDom.get_gramatical_class(token);
+        Token token = new Token("inteligente");
+        String[] gramatical_class = HtmlDom.get_gramatical_class(token);
+        
+        for(String s : gramatical_class){
+            System.out.println(s);
+        }
+    }
+    
+    @Test
+    public void testGet_synonyms() throws Exception{
+        System.out.println("get synonyms");
+        Token token = new Token("inteligente");
+        String[] synonyms = HtmlDom.get_synonyms(token);
+        
+        for(String s : synonyms){
+            System.out.println(s);
+        }
+        
     }
     
 }
