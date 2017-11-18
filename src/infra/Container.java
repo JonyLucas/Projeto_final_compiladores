@@ -19,6 +19,10 @@ public class Container {
         return tokens.get(index);
     }
     
+    public static int get_size(){
+        return tokens.size();
+    }
+    
     public static void add(Token token){
         tokens.add(token);
     }
