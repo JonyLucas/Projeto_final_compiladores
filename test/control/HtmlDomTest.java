@@ -42,7 +42,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_gramatical_class() throws Exception{
         System.out.println("get gramatical class");
-        String[] gramatical_class = HtmlDom.get_gramatical_class("correr");
+        String[] gramatical_class = HtmlDom.get_gramatical_class("gerou");
         
         for(String s : gramatical_class){
             if(s != null)
@@ -53,7 +53,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_synonyms() throws Exception{
         System.out.println("get synonyms");
-        String[] synonyms = HtmlDom.get_synonyms("comeu");
+        String[] synonyms = HtmlDom.get_synonyms("roupa");
         
         for(String s : synonyms){
             System.out.println(s);

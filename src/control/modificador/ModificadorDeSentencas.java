@@ -16,15 +16,11 @@ import model.Token;
  */
 public class ModificadorDeSentencas {
     
-    private static int size;
-    private static String modified;
-
-    public ModificadorDeSentencas(int size, String modified) {
-        this.size = Container.get_size();
-        this.modified = "";
-    }
-    
-    public String getNormalSentece(){
+    public static String getNormalSentece(){
+        
+        int size = Container.get_size();
+        String modified = "";
+        
         for (int i = 0; i < size; i++){
             Token aux = Container.get(i);
             if (AnalisadorGramatical.is_artigo(aux) || AnalisadorGramatical.is_conjuncao(aux)){

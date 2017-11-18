@@ -43,6 +43,7 @@ public class Analisador {
         al = AnalisadorLexico.get_instance(tokens_lidos);
         al.analisar();
         
+        
     }
     
 }

@@ -30,29 +30,58 @@ public class HtmlDom {
                 i++;
             }
         }
+        
+        if(gramatical_classes.length == 0){
+            gramatical_classes = get_infinitive_verb(token);
+        }
 
         return gramatical_classes;
     }
     
-    public static String[] get_synonyms(String token) throws IOException{
-        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get(); //"http://www.sinonimos.com.br/"
-        //Elements result = doc.getElementsByClass("sinonimo");
-        Elements content = doc.getElementsByClass("adicional sinonimos");
-        Elements result = content.first().select("a[href]");
+    private static String[] get_infinitive_verb(String token) throws IOException{
+        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
+        Elements content = doc.getElementsByClass("adicional");
+        Elements result = content.select("a[href]");
         
-        int size = result.size();
-        int i = 0;
+        //System.out.println(result.last().text());
 
-        String[] synonyms = new String[size];
+        String infinitive_verb = result.last().text();
         
-        for(Element element : result){
-            //System.out.println(element.text());
-            synonyms[i] = element.text();
-            i++;
+        return get_gramatical_class(infinitive_verb);
+    }
+    
+    public static String[] get_synonyms(String token) throws IOException{
+        
+        String[] synonyms;
+        
+        try{
+            Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get(); //"http://www.sinonimos.com.br/" // "http://www.dicio.com.br/"
+            //Elements result = doc.getElementsByClass("sinonimo");
+            Elements content = doc.getElementsByClass("adicional sinonimos");
+            Elements result = content.first().select("a[href]");
+            
+            int size = result.size();
+            int i = 0;
+
+            synonyms = new String[size];
+
+            for(Element element : result){
+                //System.out.println(element.text());
+                synonyms[i] = element.text();
+                i++;
+            }
+            
+        }catch(NullPointerException npe){
+            System.out.println("Não há sinônimos");
+            synonyms = new String[0];
         }
         
         return synonyms;
         
+    }
+
+    private static String[] get_inifinitive_verb(String token) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
