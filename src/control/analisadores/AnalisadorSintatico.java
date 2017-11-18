@@ -108,9 +108,9 @@ public class AnalisadorSintatico {
     
     private static boolean sujeito_simples(){
         // <Sujeito_simples> -> <varios_adjunto_adnominal> <nucleo_sujeito> <varios_adjunto_adnominal>
-        if(varios_adjunto_adnomial()){
+        if(varios_adjunto_adnominal()){
             if(nucleo_sujeito()){
-                if(varios_adjunto_adnomial()){
+                if(varios_adjunto_adnominal()){
                     return true;
                 }else{
                     return false;
@@ -123,10 +123,10 @@ public class AnalisadorSintatico {
         }
     }
     
-    private static boolean varios_adjunto_adnomial(){
+    private static boolean varios_adjunto_adnominal(){
         // <varios_adjuntos_adnomial> -> <varios_adjunto_adnomial> <adjunto_adnomial>
         if(adjunto_adnomial()){
-            if(varios_adjunto_adnomial()){
+            if(varios_adjunto_adnominal()){
                 return true;
             }else{
                 return false;
@@ -243,39 +243,264 @@ public class AnalisadorSintatico {
     private static boolean predicado(){
         // <predicado> -> <verbo_ligacao> <predicativo_sujeito> <adjunto_adverbial>
         if(verbo_ligacao()){
-            if(predicado_sujeito()){
+            if(predicativo_sujeito()){
                 if(adjunto_adverbial()){
                     return true;
-                }
-            }
+                }else
+                    return false;
+            }else
+                return false;
         // <predicado> -> <verbo_intrasintivo> <adjunto_adverbial>
         }else if(verbo_intransitivo()){
             if(adjunto_adverbial()){
                 return true;
             }else
                 return false;
-        }
-        return false;
+        // <predicado> -> <verbo_trans_indireto> <objeto_indireto> <predicativo_objeto> <adjunto_adverbial>
+        }else if(verbo_transitivo_indireto()){
+            if(objeto_indireto()){
+                if(predicativo_objeto()){
+                    if(adjunto_adverbial()){
+                        return true;
+                    }
+                    else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        // <predicado> -> <verbo_trans_direto> <objeto_direto> <predicativo_objetivo> <adjunto_adverbial>
+        }else if(verbo_transitivo_direto()){
+            if(verbo_direto()){
+                if(predicativo_objeto()){
+                    if(adjunto_adverbial()){
+                        return true;
+                    }else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        // <predicado> -> <locucao_verbal> <agente_passiva>
+        }else if(locucao_verbal()){
+            if(agente_passiva()){
+                return true;
+            }else{
+                return false;
+            }
+        }else
+            return false;
     }
     
-    private static boolean numeral(){
-        return false;
+    private static boolean objeto_direto(){
+        // <objeto_direto> -> <varios_adjunto_adnominal> <nome> <varios_adjunto_adnominal> <complemento_nominal>
+        if(varios_adjunto_adnominal()){
+            if(nome()){
+                if(varios_adjunto_adnominal()){
+                    if(complemento_nominal()){
+                        return true;
+                    }else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        // <objeto_indireto> -> [preposicao] <varios_adjunto_adnominal> <nome> <varios_adjunto_adnominal> <complemento_nominal>
+        }else if(preposicao()){
+            if(varios_adjunto_adnominal()){
+                if(nome()){
+                    if(varios_adjunto_adnominal()){
+                        if(complemento_nominal()){
+                            return true;
+                        }else
+                            return false;
+                    }else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean objeto_indireto(){
+        // <objeto_indireto> -> [preposicao] <varios_adjunto_adnominal> <nome> <varios_adjunto_adnominal> <complemento_nominal>
+        if(preposicao()){
+            if(varios_adjunto_adnominal()){
+                if(nome()){
+                    if(varios_adjunto_adnominal()){
+                        if(complemento_nominal()){
+                            return true;
+                        }else
+                            return false;
+                    }else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean predicativo_objeto(){
+        // <predicativo_objeto> -> [adjetivo]
+        if(adjetivo()){
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean predicativo_sujeito(){
+        // <predicativo_sujeito> -> [adjetivo]
+        if(adjetivo()){
+            return true;
+        // <predicativo_sujeito> -> [substantivo]
+        }else if(substantivo()){
+            return true;
+        // <predicativo_sujeito> -> [pronome]
+        }else if(pronome()){
+           return true; 
+        // <predicativo_sujeito> -> [numeral]
+        }else if(numeral()){
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean adjunto_adverbial(){
+        // <adjunto_adverbial> -> [adverbio]
+        if(adverbio()){
+            return true;
+        // <adjunto_adverbial> -> <locucao_adverbial>
+        }else if(locucao_adverbial()){
+            return true;
+        }else
+            return false;
     }
     
     private static boolean locucao_adverbial(){
-        return false;
+        // <locucao_adverbial> -> [preposicao] [substantivo] | [preposicao] [adjetivo] | [preposicao] [adverbio]
+        if(preposicao()){
+            if(substantivo()){
+                return true;
+            }else if(adjetivo()){
+                return true;
+            }else if(adverbio()){
+                return true;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean complemento_nominal(){
+        // <complemento_nominal> -> [preposicao] <varios_adjunto_adnominal> <nome> <varios_adjunto_adnominal>
+        if(preposicao()){
+            if(varios_adjunto_adnominal()){
+                if(nome()){
+                    if(varios_adjunto_adnominal()){
+                        return true;
+                    }else
+                        return false;
+                }else
+                    return false;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean locucao_verbal(){
+        // <locucao_verbal> -> <verbo_auxiliar> [verbo]
+        if(verbo_auxiliar()){
+            if(verbo()){
+                return true;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean verbo_auxiliar(){
+        // <verbo_auxiliar> -> "ser"(conjugado)
+        if(token.get_word().equals("ser")){
+            token = next();
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean agente_passiva(){
+        // <agente_passiva> -> "por" <sub_pron> || "de" <sub_pron>
+        String word = token.get_word();
+        if(word.equals("por") || word.equals("de")){
+            token = next();
+            if(sub_pron()){
+                return true;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean sub_pron(){
+        if(substantivo()){
+            return true;
+        }else if(pronome()){
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean adverbio(){
+        if(AnalisadorGramatical.is_adverbio(token)){
+            token = next();
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean preposicao(){
+        if(AnalisadorGramatical.is_preposicao(token)){
+            token = next();
+            return true;
+        }else
+            return false;
+    }
+    
+    private static boolean numeral(){
+        if(AnalisadorGramatical.is_numeral(token)){
+            token = next();
+            return true;
+        }else
+            return false;
     }
     
     private static boolean adjetivo(){
-        return false;
+        if(AnalisadorGramatical.is_adjetivo(token)){
+            token = next();
+            return true;
+        }else{
+            return false;
+        }
     }
     
     private static boolean substantivo(){
-        return false;
+        if(AnalisadorGramatical.is_substantivo(token)){
+            token = next();
+            return true;
+        }else
+            return false;
     }
     
     private static boolean verbo(){
-        return false;
+        if(AnalisadorGramatical.is_verbo(token)){
+            token = next();
+            return true;
+        }else
+            return false;
     }
     
 }
