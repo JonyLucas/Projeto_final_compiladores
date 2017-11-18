@@ -7,6 +7,7 @@ package control.analisadores;
 
 import infra.Container;
 import model.Token;
+import control.analisadores.AnalisadorGramatical;
 
 /**
  *
@@ -124,8 +125,8 @@ public class AnalisadorSintatico {
     
     private static boolean varios_adjunto_adnomial(){
         // <varios_adjuntos_adnomial> -> <varios_adjunto_adnomial> <adjunto_adnomial>
-        if(varios_adjunto_adnomial()){
-            if(adjunto_adnomial()){
+        if(adjunto_adnomial()){
+            if(varios_adjunto_adnomial()){
                 return true;
             }else{
                 return false;
@@ -167,13 +168,13 @@ public class AnalisadorSintatico {
         // <adjunto_adnominal> -> <locucao_adjetiva>
         }else if(locucao_adjetiva()){
             return true;
-        // <adjunto_adnominal> -> <artigo>
+        // <adjunto_adnominal> -> [artigo]
         }else if(artigo()){
             return true;
-        // <adjunto_adnominal> -> <pronome>
+        // <adjunto_adnominal> -> [pronome]
         }else if(pronome()){
             return true;
-        // <adjunto_adnominal> -> <pronome>
+        // <adjunto_adnominal> -> [numeral]
         }else if(numeral()){
             return true;
         // <adjunto_adnominal> -> [vazio]
@@ -183,7 +184,11 @@ public class AnalisadorSintatico {
     }
     
     private static boolean pronome(){
-        return false;
+        if(AnalisadorGramatical.is_pronome(token)){
+            token = next();
+            return true;
+        }else
+            return false;
     }
     
     private static boolean artigo(){
@@ -215,7 +220,7 @@ public class AnalisadorSintatico {
     }
     
     private static boolean conjuncao(){
-        if(token.get_gramatical_class().contains("conjunção")){
+        if(AnalisadorGramatical.is_conjuncao(token)){
             token = next();
             return true;
         }
@@ -223,16 +228,37 @@ public class AnalisadorSintatico {
             return false;
     }
     
+    private static boolean locucao_adjetiva(){
+        // <locucao_adjetiva> -> [preposicao] [substantivo] | <locucao_adjetiva> -> [preposicao] [adverbio]
+        if(preposicao()){
+            if(substantivo()){
+                return true;
+            }else if(adverbio()){
+                return true;
+            }
+        }else
+            return false;
+    }
+    
     private static boolean predicado(){
-        
+        // <predicado> -> <verbo_ligacao> <predicativo_sujeito> <adjunto_adverbial>
+        if(verbo_ligacao()){
+            if(predicado_sujeito()){
+                if(adjunto_adverbial()){
+                    return true;
+                }
+            }
+        // <predicado> -> <verbo_intrasintivo> <adjunto_adverbial>
+        }else if(verbo_intransitivo()){
+            if(adjunto_adverbial()){
+                return true;
+            }else
+                return false;
+        }
         return false;
     }
     
     private static boolean numeral(){
-        return false;
-    }
-    
-    private static boolean locucao_adjetiva(){
         return false;
     }
     

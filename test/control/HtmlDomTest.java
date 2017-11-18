@@ -53,7 +53,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_synonyms() throws Exception{
         System.out.println("get synonyms");
-        String[] synonyms = HtmlDom.get_synonyms("inteligente");
+        String[] synonyms = HtmlDom.get_synonyms("comeu");
         
         for(String s : synonyms){
             System.out.println(s);

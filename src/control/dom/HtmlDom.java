@@ -35,12 +35,14 @@ public class HtmlDom {
     }
     
     public static String[] get_synonyms(String token) throws IOException{
-        Document doc = Jsoup.connect("http://www.sinonimos.com.br/" + token + "/").get();
-        Elements result = doc.getElementsByClass("sinonimo");
+        Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get(); //"http://www.sinonimos.com.br/"
+        //Elements result = doc.getElementsByClass("sinonimo");
+        Elements content = doc.getElementsByClass("adicional sinonimos");
+        Elements result = content.first().select("a[href]");
         
         int size = result.size();
         int i = 0;
-        
+
         String[] synonyms = new String[size];
         
         for(Element element : result){
