@@ -56,12 +56,16 @@ public class Token {
     
     public void set_gramatical_class(String[] gc){
         for(String s : gc){
+            if(s == null)
+                continue;
             gramatical_class.add(s);
         }
     }
     
     public void add_synonym(String[] synonymous){
         for(String s : synonymous){
+            if(s == null)
+                continue;
             synonyms.add(s);
         }
     }

@@ -19,6 +19,7 @@ import model.Token;
 public class Analisador {
     
     private static AnalisadorLexico al;
+    private static AnalisadorSintatico as;
     private static LeitorDeTexto lt;
     
     public static void analisar(String file_path){

@@ -34,7 +34,7 @@ public class LeitorDeTexto {
         
         while(scan.hasNext()){
             word = scan.next();
-            tokens.add(word);
+            tokens.add(word.toLowerCase());
         }
         
         scan.close();
