@@ -32,31 +32,38 @@ public class AnalisadorSintatico {
     }
     
     private static boolean periodo(){
+        // <Periodo> -> <Oracao> <Periodo>
         if(oracao()){
             if(periodo()){
                 return true;
             }else{
                 return false;
             }
+        // Periodo -> VAZIO
         }else{
             return true;
         }
     }
     
     private static boolean oracao(){
+        // <Oracao> -> <Sujeito> <Predicado> [.]
         if(sujeito()){
             if(predicado()){
-                return true;
+                if(token.get_word().equals(".")){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }
-            
+        // <Oracao> -> <Predicado> <Sujeito> [.]
         }else if(predicado()){
             if(sujeito()){
-                if(predicado()){
+                if(token.get_word().equals(".")){
                     return true;
                 }else{
-                    return true;
+                    return false;
                 }
             }else{
                 return false;
@@ -68,26 +75,10 @@ public class AnalisadorSintatico {
     }
     
     private static boolean sujeito(){
+        // <Sujeito> -> <Sujeito_simples> | <Sujeito_simples> <Separador> <Sujeito>
         if(sujeito_simples()){
-            return true;
-        }else if(sujeito_composto()){
-            return false;
-        }else{
-            return true;
-        }
-    }
-    
-    private static boolean sujeito_composto(){
-        if(sujeito_simples()){
-            token = next();
-            if(token.get_word().equals(",")){
-                if(sujeito_composto()){
-                    return true;
-                }else{
-                    return false;
-                }
-            }else if(conjuncao()){
-                if(sujeito_composto()){
+            if(separador()){
+                if(sujeito()){
                     return true;
                 }else{
                     return false;
@@ -95,15 +86,30 @@ public class AnalisadorSintatico {
             }else{
                 return true;
             }
+        // <Sujeito> -> VAZIO
+        }else{
+            return true;
+        }
+    }
+    
+    private static boolean separador(){
+        // <Separador> -> [,]
+        if(token.get_word().equals(",")){
+            token = next();
+            return true;
+        // <Separador> -> <Conjuncao>
+        }else if(conjuncao()){
+            return true;
         }else{
             return false;
         }
     }
     
     private static boolean sujeito_simples(){
-        if(adjunto_adnomial()){
-            if(nome()){
-                if(adjunto_adnomial()){
+        // <Sujeito_simples> -> <varios_adjunto_adnominal> <nucleo_sujeito> <varios_adjunto_adnominal>
+        if(varios_adjunto_adnomial()){
+            if(nucleo_sujeito()){
+                if(varios_adjunto_adnomial()){
                     return true;
                 }else{
                     return false;
@@ -116,19 +122,37 @@ public class AnalisadorSintatico {
         }
     }
     
-    private static boolean conjuncao(){
-        return false;
+    private static boolean varios_adjunto_adnomial(){
+        // <varios_adjuntos_adnomial> -> <varios_adjunto_adnomial> <adjunto_adnomial>
+        if(varios_adjunto_adnomial()){
+            if(adjunto_adnomial()){
+                return true;
+            }else{
+                return false;
+            }
+        // <varios_adjunto_adnomial -> [VAZIO]
+        }else{
+            return true;
+        }
     }
     
-    private static boolean predicado(){
-        return false;
+    private static boolean nucleo_sujeito(){
+        // <nucleo_sujeito> -> <nome>
+        if(nome()){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     private static boolean nome(){
+        // <nome> -> <substantivo>
         if(substantivo()){
             return true;
+        // <nome> -> <pronome>
         }else if(pronome()){
             return true;
+        // <nome> -> <verbo>
         }else if(verbo()){
             return true;
         }else{
@@ -137,21 +161,29 @@ public class AnalisadorSintatico {
     }
     
     private static boolean adjunto_adnomial(){
+       // <adjunto_adnomial> -> <adjetivo>
         if(adjetivo()){
             return true;
+        // <adjunto_adnominal> -> <locucao_adjetiva>
         }else if(locucao_adjetiva()){
             return true;
-        }else if(locucao_adverbial()){
-            return true;
+        // <adjunto_adnominal> -> <artigo>
         }else if(artigo()){
             return true;
+        // <adjunto_adnominal> -> <pronome>
         }else if(pronome()){
             return true;
+        // <adjunto_adnominal> -> <pronome>
         }else if(numeral()){
             return true;
+        // <adjunto_adnominal> -> [vazio]
         }else{
             return true;
         }
+    }
+    
+    private static boolean pronome(){
+        return false;
     }
     
     private static boolean artigo(){
@@ -182,6 +214,20 @@ public class AnalisadorSintatico {
         }
     }
     
+    private static boolean conjuncao(){
+        if(token.get_gramatical_class().contains("conjunção")){
+            token = next();
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    private static boolean predicado(){
+        
+        return false;
+    }
+    
     private static boolean numeral(){
         return false;
     }
@@ -195,10 +241,6 @@ public class AnalisadorSintatico {
     }
     
     private static boolean adjetivo(){
-        return false;
-    }
-    
-    private static boolean pronome(){
         return false;
     }
     

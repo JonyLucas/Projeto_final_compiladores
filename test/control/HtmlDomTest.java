@@ -42,7 +42,7 @@ public class HtmlDomTest {
     @Test
     public void testGet_gramatical_class() throws Exception{
         System.out.println("get gramatical class");
-        String[] gramatical_class = HtmlDom.get_gramatical_class("gerou");
+        String[] gramatical_class = HtmlDom.get_gramatical_class("correr");
         
         for(String s : gramatical_class){
             if(s != null)

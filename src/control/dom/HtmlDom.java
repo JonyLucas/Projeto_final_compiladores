@@ -5,7 +5,7 @@ package control.dom;
  * @author Joao
  */
 import java.io.IOException;
-import model.Token;
+import control.analisadores.AnalisadorGramatical;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
@@ -15,21 +15,16 @@ public class HtmlDom {
     public static String[] get_gramatical_class(String token) throws IOException {
         
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
-        Element content = doc.getElementById("content");
-        Elements result = content.getElementsByTag("span");
+        Elements content = doc.getElementsByClass("adicional");
+        Elements result = content.select("b");
         
         int size = result.size();
         int i = 0;
-        
-        if(size == 0){
-            System.out.println("VAZIO");
-        }
-        
+
         String[] gramatical_classes = new String[size];
         
-        for (Element element : result) {
-            String key = element.attr("class");
-            if ("cl".equals(key)) {
+        for(Element element : result){
+            if(AnalisadorGramatical.is_gramatical_class(element.text())){
                 //System.out.println(element.text());
                 gramatical_classes[i] = element.text();
                 i++;
