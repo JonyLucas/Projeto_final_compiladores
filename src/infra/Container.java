@@ -16,7 +16,12 @@ public class Container {
     private static ArrayList<Token> tokens = new ArrayList<Token>();
     
     public static Token get(int index){
-        return tokens.get(index);
+        
+        if(index < tokens.size()){
+            return tokens.get(index);
+        }
+        
+        return tokens.get(index-1);
     }
     
     public static int get_size(){

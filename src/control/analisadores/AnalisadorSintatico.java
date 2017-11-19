@@ -52,6 +52,7 @@ public class AnalisadorSintatico {
         if(sujeito()){
             if(predicado()){
                 if(token.get_word().equals(".")){
+                    token = next();
                     return true;
                 }else{
                     return false;
@@ -63,6 +64,7 @@ public class AnalisadorSintatico {
         }else if(predicado()){
             if(sujeito()){
                 if(token.get_word().equals(".")){
+                    token = next();
                     return true;
                 }else{
                     return false;
@@ -236,27 +238,19 @@ public class AnalisadorSintatico {
                 return true;
             }else if(adverbio()){
                 return true;
-            }
+            }else
+                return false;
         }else
             return false;
     }
     
     private static boolean predicado(){
-        // <predicado> -> <verbo_ligacao> <predicativo_sujeito> <adjunto_adverbial>
+        // <predicado> -> <verbo_ligacao>
         if(verbo_ligacao()){
-            if(predicativo_sujeito()){
-                if(adjunto_adverbial()){
-                    return true;
-                }else
-                    return false;
-            }else
-                return false;
-        // <predicado> -> <verbo_intrasintivo> <adjunto_adverbial>
+            return true;
+        // <predicado> -> <verbo_intrasintivo>
         }else if(verbo_intransitivo()){
-            if(adjunto_adverbial()){
-                return true;
-            }else
-                return false;
+            return true;
         // <predicado> -> <verbo_trans_indireto> <objeto_indireto> <predicativo_objeto> <adjunto_adverbial>
         }else if(verbo_transitivo_indireto()){
             if(objeto_indireto()){
@@ -270,18 +264,9 @@ public class AnalisadorSintatico {
                     return false;
             }else
                 return false;
-        // <predicado> -> <verbo_trans_direto> <objeto_direto> <predicativo_objetivo> <adjunto_adverbial>
+        // <predicado> -> <verbo_trans_direto>
         }else if(verbo_transitivo_direto()){
-            if(verbo_direto()){
-                if(predicativo_objeto()){
-                    if(adjunto_adverbial()){
-                        return true;
-                    }else
-                        return false;
-                }else
-                    return false;
-            }else
-                return false;
+            return true;
         // <predicado> -> <locucao_verbal> <agente_passiva>
         }else if(locucao_verbal()){
             if(agente_passiva()){
@@ -289,6 +274,60 @@ public class AnalisadorSintatico {
             }else{
                 return false;
             }
+        }else
+            return false;
+    }
+    
+    private static boolean verbo_ligacao(){
+        // <verbo_ligacao> -> <verbo> <predicativo_sujeito> | <verbo> <adjunto_adverbial>
+        if(verbo()){
+            if(predicativo_sujeito()){
+                return true;
+            }else if(adjunto_adverbial()){
+                return true;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    public static boolean verbo_intransitivo(){
+        // <verbo_intrasintivo> -> <verbo> <adjunto_adverbial> | <verbo>
+        if(verbo()){
+            if(adjunto_adverbial()){
+                return true;
+            }else{
+                return true;
+            }
+        }else
+            return false;
+    }
+    
+    public static boolean verbo_transitivo_indireto(){
+        // <verbo_trans_indireto> -> <verbo> [preposicao] <objeto_direto> | <verbo> [preposicao] <predicativo_objeto>
+        if(verbo()){
+            if(preposicao()){
+                if(objeto_direto()){
+                    return true;
+                }else if(predicativo_objeto()){
+                    return true;
+                }else
+                    return false;
+            }else
+                return false;
+        }else
+            return false;
+    }
+    
+    private static boolean verbo_transitivo_direto(){
+        // <verbo_trans_direto> -> <verbo> <objeto_direto> | <verbo> <adjunto_adverbial>
+        if(verbo()){
+            if(objeto_direto()){
+                return true;
+            }else if(adjunto_adverbial()){
+                return true;
+            }else
+                return false;
         }else
             return false;
     }
@@ -306,22 +345,7 @@ public class AnalisadorSintatico {
                     return false;
             }else
                 return false;
-        // <objeto_indireto> -> [preposicao] <varios_adjunto_adnominal> <nome> <varios_adjunto_adnominal> <complemento_nominal>
-        }else if(preposicao()){
-            if(varios_adjunto_adnominal()){
-                if(nome()){
-                    if(varios_adjunto_adnominal()){
-                        if(complemento_nominal()){
-                            return true;
-                        }else
-                            return false;
-                    }else
-                        return false;
-                }else
-                    return false;
-            }else
-                return false;
-        }else
+        }else 
             return false;
     }
     
@@ -426,7 +450,7 @@ public class AnalisadorSintatico {
     
     private static boolean verbo_auxiliar(){
         // <verbo_auxiliar> -> "ser"(conjugado)
-        if(token.get_word().equals("ser")){
+        if(token.get_word().equals("ser") || token.get_word().equals("estar") || token.get_word().equals("ter") || token.get_word().equals("haver")){
             token = next();
             return true;
         }else

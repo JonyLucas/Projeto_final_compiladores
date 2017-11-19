@@ -22,7 +22,7 @@ public class Analisador {
     private static AnalisadorSintatico as;
     private static LeitorDeTexto lt;
     
-    public static void analisar(String file_path){
+    public static void analisar(String file_path)throws GramaticalException{
         
         ArrayList<String> tokens_lidos = null;
         
