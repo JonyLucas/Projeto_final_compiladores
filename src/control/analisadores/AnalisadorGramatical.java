@@ -22,6 +22,14 @@ public class AnalisadorGramatical {
             return false;
     }
     
+    public static boolean isConjuncaoAditiva(String word){
+         if (word.equals(",") || word.equals("e") || word.equals("nem") || word.equals("ou")){
+             return true;
+         }
+        
+        return false;
+    }
+    
     public static boolean is_substantivo(Token token){
         ArrayList<String> tokens_gramatical_class = token.get_gramatical_class();
         for(String gramatical_class : tokens_gramatical_class){

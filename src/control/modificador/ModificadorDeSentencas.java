@@ -7,6 +7,7 @@ package control.modificador;
 
 import control.analisadores.AnalisadorGramatical;
 import infra.Container;
+import java.util.Arrays;
 import java.util.Random;
 import model.Token;
 
@@ -15,13 +16,11 @@ import model.Token;
  * @author Nycholas
  */
 public class ModificadorDeSentencas {
+    static String modified = "";
     
-    public static String getNormalSentece(){
-        
-        int size = Container.get_size();
-        String modified = "";
-        
-        for (int i = 0; i < size; i++){
+    public static String getModifiedSentence(){
+               
+        for (int i = 0; i < Container.get_size(); i++){
             Token aux = Container.get(i);
             if (AnalisadorGramatical.is_artigo(aux) || AnalisadorGramatical.is_conjuncao(aux)){
                 modified += aux.get_word() + " ";
@@ -30,12 +29,42 @@ public class ModificadorDeSentencas {
             Random number = new Random();
             int percentage = number.nextInt(2);
             if (percentage == 1){
-                modified += aux.get_synonyms().get(0) + " ";
-            } else {
+                if (aux.get_synonyms().size() > 0){ //Só troca o sinônimo caso possua ao menos um sinonimo na lista
+                    Random number2 = new Random();
+                    modified += aux.get_synonyms().get(number2.nextInt(aux.get_synonyms().size()) + 1) + " ";
+                }
+                else
+                    modified += aux.get_word() + " ";
+            }
+            else
                 modified += aux.get_word() + " ";
+        }     
+        
+        return modified;
+    }
+    
+    public static void clear(){
+        modified = "";
+    }
+    
+    public static void setConjuncaoAditiva(String modified){
+        String modified2 = "";
+        String[] words = modified.split(" "); 
+        
+        for (int i = 0; i < words.length; i++){
+            //Verifica se é uma conjunção aditiva
+            //Verifica se não vai estourar o for
+            //Verifica se a conjunção não é a primeira palavra da frase
+            if (AnalisadorGramatical.isConjuncaoAditiva(words[i]) && i <= words.length && i > 0) {
+                String temp = words[i - 1];
+                words[i - 1] = words[i + 1];
+                words[i + 1] = temp;
             }
         }
         
-        return modified;
+        for (String string : words)
+            modified2 += string + " ";
+        
+        System.out.println(modified2);
     }
 }
