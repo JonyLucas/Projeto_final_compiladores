@@ -23,12 +23,13 @@ public class AnalisadorSintatico {
         return token;
     }
     
-    public static void analisar(){
+    public static void analisar() throws GramaticalException{
         token = next();
         if(periodo()){
-            
+            System.out.println("Frase aceita");
         }else{
             System.out.println("Erro: a sentença é inválida");
+            throw new GramaticalException();
         }
     }
     
