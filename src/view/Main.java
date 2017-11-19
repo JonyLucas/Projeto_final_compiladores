@@ -16,7 +16,7 @@ public class Main {
         String dir = JOptionPane.showInputDialog(null, "Digite o diretório do arquivo: ");
         Analisador.analisar(dir);
         Container.list_all();
-        System.out.println(ModificadorDeSentencas.getNormalSentece());
+        ModificadorDeSentencas.setConjuncaoAditiva(ModificadorDeSentencas.getModifiedSentence());
     }
     
 }
