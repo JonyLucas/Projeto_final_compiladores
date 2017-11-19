@@ -55,6 +55,10 @@ public class Token {
     }
     
     public void set_gramatical_class(String[] gc){
+        
+        if(gc == null)
+            return;
+        
         for(String s : gc){
             if(s == null)
                 continue;
@@ -63,6 +67,10 @@ public class Token {
     }
     
     public void add_synonym(String[] synonymous){
+        
+        if(synonymous == null)
+            return;
+        
         for(String s : synonymous){
             if(s == null)
                 continue;

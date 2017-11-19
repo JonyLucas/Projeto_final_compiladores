@@ -6,6 +6,7 @@ package control.dom;
  */
 import java.io.IOException;
 import control.analisadores.AnalisadorGramatical;
+import model.Token;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
@@ -15,6 +16,11 @@ public class HtmlDom {
     public static String[] get_gramatical_class(String token) throws IOException {
         
         System.out.println(token);
+        
+        if(AnalisadorGramatical.is_pontuacao(new Token(token))){
+            return null;
+        }
+        
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
         
         /**Retira a parte que contem a classificacao gramatical**/
@@ -76,7 +82,7 @@ public class HtmlDom {
             }
             
         }catch(NullPointerException npe){
-            System.out.println("Não há sinônimos");
+            //System.out.println("Não há sinônimos");
             synonyms = new String[0];
         }
         

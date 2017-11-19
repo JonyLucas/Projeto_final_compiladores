@@ -34,16 +34,19 @@ public class AnalisadorSintatico {
     }
     
     private static boolean periodo(){
+        
+        // Periodo -> VAZIO
+        if(token.get_position() == Container.get_size()){
+            return true;
         // <Periodo> -> <Oracao> <Periodo>
-        if(oracao()){
+        }else if(oracao()){
             if(periodo()){
                 return true;
             }else{
                 return false;
             }
-        // Periodo -> VAZIO
         }else{
-            return true;
+            return false;
         }
     }
     
@@ -182,7 +185,7 @@ public class AnalisadorSintatico {
             return true;
         // <adjunto_adnominal> -> [vazio]
         }else{
-            return true;
+            return false;
         }
     }
     

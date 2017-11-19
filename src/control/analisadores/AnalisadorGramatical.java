@@ -139,4 +139,11 @@ public class AnalisadorGramatical {
         return false;
     }
     
+    public static boolean is_pontuacao(Token token){
+        if(token.get_word().equals(".") || token.get_word().equals(",") || token.get_word().equals("?") || token.get_word().equals("!")){
+            return true;
+        }else
+            return false;
+    }
+    
 }
