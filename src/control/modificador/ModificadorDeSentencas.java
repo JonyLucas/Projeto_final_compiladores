@@ -31,7 +31,7 @@ public class ModificadorDeSentencas {
             if (percentage == 1){
                 if (aux.get_synonyms().size() > 0){ //Só troca o sinônimo caso possua ao menos um sinonimo na lista
                     Random number2 = new Random();
-                    modified += aux.get_synonyms().get(number2.nextInt(aux.get_synonyms().size()) + 1) + " ";
+                    modified += aux.get_synonyms().get(number2.nextInt(aux.get_synonyms().size())) + " ";
                 }
                 else
                     modified += aux.get_word() + " ";
