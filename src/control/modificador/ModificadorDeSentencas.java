@@ -21,23 +21,22 @@ public class ModificadorDeSentencas {
     public static String getModifiedSentence(){
                
         for (int i = 0; i < Container.get_size(); i++){
-            Token aux = Container.get(i);
-            if (AnalisadorGramatical.is_artigo(aux) || AnalisadorGramatical.is_conjuncao(aux)){
-                modified += aux.get_word() + " ";
+            if (AnalisadorGramatical.is_artigo(Container.get(i)) || AnalisadorGramatical.is_conjuncao(Container.get(i))){
+                modified += Container.get(i).get_word() + " ";
                 continue;
             }
             Random number = new Random();
             int percentage = number.nextInt(2);
             if (percentage == 1){
-                if (aux.get_synonyms().size() > 0){ //Só troca o sinônimo caso possua ao menos um sinonimo na lista
+                if (Container.get(i).get_synonyms().size() > 0){ //Só troca o sinônimo caso possua ao menos um sinonimo na lista
                     Random number2 = new Random();
-                    modified += aux.get_synonyms().get(number2.nextInt(aux.get_synonyms().size())) + " ";
+                    modified += Container.get(i).get_synonyms().get(number2.nextInt(Container.get(i).get_synonyms().size())) + " ";
                 }
                 else
-                    modified += aux.get_word() + " ";
+                    modified += Container.get(i).get_word() + " ";
             }
             else
-                modified += aux.get_word() + " ";
+                modified += Container.get(i).get_word() + " ";
         }     
         
         return modified;
@@ -55,7 +54,12 @@ public class ModificadorDeSentencas {
             //Verifica se é uma conjunção aditiva
             //Verifica se não vai estourar o for
             //Verifica se a conjunção não é a primeira palavra da frase
-            if (AnalisadorGramatical.isConjuncaoAditiva(words[i]) && i <= words.length && i > 0) {
+            if (AnalisadorGramatical.isConjuncaoAditiva(words[i]) && i <= words.length) {
+                if (i < words.length - 1){
+                    if (AnalisadorGramatical.is_verbo(Container.get(i + 1)) || AnalisadorGramatical.is_verbo(Container.get(i - 1))){
+                        continue;
+                    }
+                }
                 String temp = words[i - 1];
                 words[i - 1] = words[i + 1];
                 words[i + 1] = temp;
