@@ -11,10 +11,13 @@ import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
 public class HtmlDom {
-
+    
     public static String[] get_gramatical_class(String token) throws IOException {
         
+        System.out.println(token);
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
+        
+        /**Retira a parte que contem a classificacao gramatical**/
         Elements content = doc.getElementsByClass("adicional");
         Elements result = content.select("b");
         
@@ -39,6 +42,7 @@ public class HtmlDom {
     }
     
     private static String[] get_infinitive_verb(String token) throws IOException{
+        
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
         Elements content = doc.getElementsByClass("adicional");
         Elements result = content.select("a[href]");
