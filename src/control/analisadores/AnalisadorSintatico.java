@@ -160,8 +160,6 @@ public class AnalisadorSintatico {
         }else if(pronome()){
             return true;
         // <nome> -> <verbo>
-        }else if(verbo()){
-            return true;
         }else{
             return false;
         }
@@ -248,74 +246,58 @@ public class AnalisadorSintatico {
     }
     
     private static boolean predicado(){
-        // <predicado> -> <verbo_ligacao>
-        if(verbo_ligacao()){
-            return true;
-        // <predicado> -> <verbo_intrasintivo>
-        }else if(verbo_intransitivo()){
-            return true;
-        // <predicado> -> <verbo_trans_indireto> <objeto_indireto> <predicativo_objeto> <adjunto_adverbial>
-        }else if(verbo_transitivo_indireto()){
-            if(objeto_indireto()){
-                if(predicativo_objeto()){
-                    if(adjunto_adverbial()){
-                        return true;
-                    }
-                    else
-                        return false;
-                }else
-                    return false;
-            }else
-                return false;
-        // <predicado> -> <verbo_trans_direto>
-        }else if(verbo_transitivo_direto()){
-            return true;
-        // <predicado> -> <locucao_verbal> <agente_passiva>
-        }else if(locucao_verbal()){
-            if(agente_passiva()){
+        if(verbo()){
+            // <predicado> -> <verbo_trans_indireto> <objeto_indireto> <predicativo_objeto> <adjunto_adverbial>
+            if(verbo_transitivo_indireto()){
                 return true;
-            }else{
+            // <predicado> -> <verbo_trans_direto>
+            }else if(verbo_transitivo_direto()){
+                return true;
+            // <predicado> -> <locucao_verbal> <agente_passiva>
+            }else if(locucao_verbal()){
+                if(agente_passiva()){
+                    return true;
+                }else{
+                    return false;
+                }
+            // <predicado> -> <verbo_ligacao>
+            }else if(verbo_ligacao()){
+                return true;
+            // <predicado> -> <verbo_intrasintivo>
+            }else if(verbo_intransitivo()){
+                return true;
+            }else                
                 return false;
-            }
         }else
             return false;
     }
     
     private static boolean verbo_ligacao(){
         // <verbo_ligacao> -> <verbo> <predicativo_sujeito> | <verbo> <adjunto_adverbial>
-        if(verbo()){
-            if(predicativo_sujeito()){
-                return true;
-            }else if(adjunto_adverbial()){
-                return true;
-            }else
-                return false;
+        if(predicativo_sujeito()){
+            return true;
+        }else if(adjunto_adverbial()){
+            return true;
         }else
             return false;
     }
     
     public static boolean verbo_intransitivo(){
         // <verbo_intrasintivo> -> <verbo> <adjunto_adverbial> | <verbo>
-        if(verbo()){
-            if(adjunto_adverbial()){
-                return true;
-            }else{
-                return true;
-            }
-        }else
-            return false;
+        if(adjunto_adverbial()){
+            return true;
+        }else{
+            return true;
+        }
     }
     
     public static boolean verbo_transitivo_indireto(){
         // <verbo_trans_indireto> -> <verbo> [preposicao] <objeto_direto> | <verbo> [preposicao] <predicativo_objeto>
-        if(verbo()){
-            if(preposicao()){
-                if(objeto_direto()){
-                    return true;
-                }else if(predicativo_objeto()){
-                    return true;
-                }else
-                    return false;
+        if(preposicao()){
+            if(objeto_direto()){
+                return true;
+            }else if(predicativo_objeto()){
+                return true;
             }else
                 return false;
         }else
@@ -324,13 +306,10 @@ public class AnalisadorSintatico {
     
     private static boolean verbo_transitivo_direto(){
         // <verbo_trans_direto> -> <verbo> <objeto_direto> | <verbo> <adjunto_adverbial>
-        if(verbo()){
-            if(objeto_direto()){
-                return true;
-            }else if(adjunto_adverbial()){
-                return true;
-            }else
-                return false;
+        if(objeto_direto()){
+            return true;
+        }else if(adjunto_adverbial()){
+            return true;
         }else
             return false;
     }
@@ -437,7 +416,7 @@ public class AnalisadorSintatico {
             }else
                 return false;
         }else
-            return false;
+            return true;
     }
     
     private static boolean locucao_verbal(){
