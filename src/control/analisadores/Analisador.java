@@ -6,6 +6,7 @@
 package control.analisadores;
 
 import control.leitores.LeitorDeTexto;
+import infra.Container;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;

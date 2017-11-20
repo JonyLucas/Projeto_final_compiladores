@@ -25,6 +25,12 @@ public class HtmlDom {
         
         /**Retira a parte que contem a classificacao gramatical**/
         Elements content = doc.getElementsByClass("adicional");
+        
+        /**Sem classe gramatical no dicionario**/
+        if(!content.text().contains("Classe gramatical:")){
+            return get_infinitive_verb(token);
+        }
+        
         Elements result = content.select("b");
         
         int size = result.size();
@@ -48,7 +54,6 @@ public class HtmlDom {
     }
     
     private static String[] get_infinitive_verb(String token) throws IOException{
-        
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
         Elements content = doc.getElementsByClass("adicional");
         Elements result = content.select("a[href]");
