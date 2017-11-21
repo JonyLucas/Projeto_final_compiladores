@@ -54,6 +54,7 @@ public class HtmlDom {
     }
     
     private static String[] get_infinitive_verb(String token) throws IOException{
+        
         Document doc = Jsoup.connect("http://www.dicio.com.br/" + token + "/").get();
         Elements content = doc.getElementsByClass("adicional");
         Elements result = content.select("a[href]");
@@ -66,6 +67,10 @@ public class HtmlDom {
     }
     
     public static String[] get_synonyms(String token) throws IOException{
+        
+        if(AnalisadorGramatical.is_pontuacao(new Token(token))){
+            return null;
+        }
         
         String[] synonyms;
         
