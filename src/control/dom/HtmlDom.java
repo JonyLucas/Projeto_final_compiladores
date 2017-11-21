@@ -15,7 +15,7 @@ public class HtmlDom {
     
     public static String[] get_gramatical_class(String token) throws IOException {
         
-        System.out.println(token);
+        //System.out.println(token);
         
         if(AnalisadorGramatical.is_pontuacao(new Token(token))){
             return null;
@@ -102,6 +102,20 @@ public class HtmlDom {
 
     private static String[] get_inifinitive_verb(String token) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static void getSnippet(String search) throws IOException{
+        String sentence = "http://www.google.com.br/search?q=" + "\"" + search + "\"";
+        
+        System.out.println("Link de Pesquisa: " + sentence);
+        System.out.print("Quantidade de Resultados: ");
+        
+        Document doc = Jsoup.connect(sentence).get();
+        Elements div = doc.select("div[id=resultStats]");
+
+        
+        
+        System.out.println(div.text());
     }
 
 }

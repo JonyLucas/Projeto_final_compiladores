@@ -17,6 +17,7 @@ import model.Token;
  */
 public class ModificadorDeSentencas {
     static String modified = "";
+    static String modified2 = "";
     
     public static String getModifiedSentence(){
                
@@ -44,10 +45,10 @@ public class ModificadorDeSentencas {
     
     public static void clear(){
         modified = "";
+        modified2 = "";
     }
     
-    public static void setConjuncaoAditiva(String modified){
-        String modified2 = "";
+    public static String setConjuncaoAditiva(String modified){
         String[] words = modified.split(" "); 
         
         for (int i = 0; i < words.length; i++){
@@ -69,6 +70,12 @@ public class ModificadorDeSentencas {
         for (String string : words)
             modified2 += string + " ";
         
-        System.out.println(modified2);
+        return modified2;
+    }
+    
+    public static String setSentenceToSearch(){
+        modified2 = modified2.replaceAll(" ", "+");
+        
+        return modified2;
     }
 }
